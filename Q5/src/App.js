@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import List from './component/list';
+import OnlineList from './component/Onlinetodos';
 let mapStateToProps = (state) => {
   return {
     name: state
@@ -9,11 +10,11 @@ let mapStateToProps = (state) => {
 }
 
 class App extends Component {
-  // componentDidMount() {
-  //   fetch(`https://jsonplaceholder.typicode.com/todos`)
-  //     .then(res => res.json())
-  //     .then(json => this.props.dispatch({ type: "GET_TODOS", payload: json }));
-  // }
+  componentDidMount() {
+    fetch(`https://jsonplaceholder.typicode.com/todos`)
+      .then(res => res.json())
+      .then(json => this.props.dispatch({ type: "GET_TODOS", payload: json }));
+  }
   render() {
     return (
       <div className="App container">
@@ -33,7 +34,8 @@ class App extends Component {
         <div>
           <List />
         </div>
-
+        {this.props.name.todoData.length === 0 && <p>Loading...</p>}
+        {this.props.name.todoData.length > 0 && <OnlineList />}
       </div>
     )
   };
